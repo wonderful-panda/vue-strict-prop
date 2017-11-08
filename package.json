@@ -3,8 +3,17 @@
   "version": "0.0.1",
   "description": "strict-typed prop builder for Vue component",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "jest": "jest",
+    "tslint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
+    "tslint:fix": "tslint -c tslint.json src/**/*.ts test/**/*.ts --fix",
+    "prettier": "prettier \"{src,test/jest}/**/*.ts\" --list-different",
+    "prettier:fix": "prettier \"{src,test/jest}/**/*.ts\" --write",
+    "lint": "npm-run-all tslint prettier",
+    "lint:fix": "npm-run-all tslint:fix prettier:fix",
+    "test": "npm-run-all lint jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +28,44 @@
   "bugs": {
     "url": "https://github.com/wonderful-panda/vue-strict-prop/issues"
   },
-  "homepage": "https://github.com/wonderful-panda/vue-strict-prop#readme"
+  "homepage": "https://github.com/wonderful-panda/vue-strict-prop#readme",
+  "devDependencies": {
+    "@types/jest": "^21.1.5",
+    "jest": "^21.2.1",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.8.1",
+    "ts-jest": "^21.2.1",
+    "ts-loader": "^3.1.1",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.1",
+    "vue": "^2.5.3",
+    "vue-template-compiler": "^2.5.3",
+    "vue-test-utils": "^1.0.0-beta.4",
+    "webpack": "^3.8.1"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "setupFiles": [
+      "<rootDir>/test/jest/setup.ts"
+    ],
+    "moduleNameMapper": {
+      "^vue$": "<rootDir>/node_modules/vue/dist/vue.js"
+    },
+    "testRegex": "test/jest/(.*)\\.test.ts$",
+    "transform": {
+      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    }
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 4
+  }
 }
