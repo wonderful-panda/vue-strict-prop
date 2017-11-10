@@ -16,6 +16,7 @@
       "vue/types/vue",
       "vue/types/options"
     ],
+    "object-literal-sort-keys": false,
     "only-arrow-functions": [
       true,
       "allow-declarations",
