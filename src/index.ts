@@ -19,37 +19,51 @@ export interface ChainableBuilder<T> extends Builder<T> {
     readonly or: BuilderCollection<T>;
 }
 
-export interface BuilderCollection<BaseType> {
-    readonly str: ChainableBuilder<BaseType | string>;
-    readonly num: ChainableBuilder<BaseType | number>;
-    readonly bool: ChainableBuilder<BaseType | boolean>;
-    readonly sym: ChainableBuilder<BaseType | symbol>;
-    func<T extends AnyFunc>(): ChainableBuilder<BaseType | T>;
-    array<T>(): ChainableBuilder<BaseType | T[]>;
-    readonlyArray<T>(): ChainableBuilder<BaseType | ReadonlyArray<T>>;
-    obj<T extends object>(): ChainableBuilder<BaseType | T>;
-    instanceOf<T1, T2 = never, T3 = never, T4 = never, T5 = never>(
-        p1: Prop<T1>,
-        p2?: Prop<T2>,
-        p3?: Prop<T3>,
-        p4?: Prop<T4>,
-        p5?: Prop<T5>
-    ): ChainableBuilder<BaseType | T1 | T2 | T3 | T4 | T5>;
+export type GeneralBuilder<BaseType> = <T1, T2 = never, T3 = never, T4 = never, T5 = never>(
+    p1: Prop<T1>,
+    p2?: Prop<T2>,
+    p3?: Prop<T3>,
+    p4?: Prop<T4>,
+    p5?: Prop<T5>
+) => ChainableBuilder<BaseType | T1 | T2 | T3 | T4 | T5>;
+
+export interface NamedBuilders<BaseType> {
+    ofFunction<T extends AnyFunc>(): ChainableBuilder<BaseType | T>;
+    ofArray<T>(): ChainableBuilder<BaseType | T[]>;
+    ofRoArray<T>(): ChainableBuilder<BaseType | ReadonlyArray<T>>;
+    ofObject<T extends object>(): ChainableBuilder<BaseType | T>;
+    ofStringLiterals<T extends string>(...values: T[]): Finisher<T>;
+    ofAny(): Builder<any>;
 }
+
+export type BuilderCollection<BaseType> = GeneralBuilder<BaseType> & NamedBuilders<BaseType>;
 
 class BuilderClass<T> implements ChainableBuilder<T> {
     constructor(private opts: PropOptions<T>) {}
     default(value: any) {
-        return { ...this.opts, required: false, default: value };
+        return {
+            ...this.opts,
+            required: false,
+            default: value
+        };
     }
     get required() {
-        return { ...this.opts, required: true };
+        return {
+            ...this.opts,
+            required: true
+        };
     }
     get optional() {
-        return { ...this.opts, required: false };
+        return {
+            ...this.opts,
+            required: false
+        };
     }
     validator(validator: Validator<T>) {
-        return new BuilderClass({ ...this.opts, validator });
+        return new BuilderClass({
+            ...this.opts,
+            validator
+        });
     }
     get or() {
         const type = this.opts.type || [];
@@ -69,37 +83,33 @@ function createBuilder<BaseType, T>(
 }
 
 function createBuilderCollection<BaseType>(baseTypes: Array<Prop<BaseType>>): BuilderCollection<BaseType> {
-    return {
-        str: createBuilder(baseTypes, String),
-        num: createBuilder(baseTypes, Number),
-        bool: createBuilder(baseTypes, Boolean),
-        sym: createBuilder(baseTypes, Symbol),
-        func<T extends AnyFunc>() {
+    const ret: GeneralBuilder<BaseType> = ((...args: Array<Prop<any>>) => createBuilder(baseTypes, ...args)) as any;
+    const namedBuilders: NamedBuilders<BaseType> = {
+        ofFunction<T extends AnyFunc>() {
             return createBuilder(baseTypes, Function as any) as ChainableBuilder<BaseType | T>;
         },
-        array<T>() {
+        ofArray<T>() {
             return createBuilder(baseTypes, Array);
         },
-        readonlyArray<T>() {
+        ofRoArray<T>() {
             return createBuilder(baseTypes, Array);
         },
-        obj<T extends object>() {
+        ofObject<T extends object>() {
             return createBuilder(baseTypes, Object);
         },
-        instanceOf(...args: Array<Prop<any>>) {
-            return createBuilder(baseTypes, ...args);
+        ofStringLiterals<T extends string>(...values: T[]): Finisher<T> {
+            return new BuilderClass<T>({
+                type: String as any,
+                validator: (v: string) => values.indexOf(v as T) >= 0
+            });
+        },
+        ofAny() {
+            return new BuilderClass<any>({}) as Builder<any>;
         }
     };
+    /* tslint:disable-next-line: prefer-object-spread */
+    return Object.assign(ret, namedBuilders);
 }
 
 const rootBuilders = createBuilderCollection<never>([]);
-export default {
-    ...rootBuilders,
-    stringLiteral<T extends string>(...values: T[]): Finisher<T> {
-        return new BuilderClass<T>({
-            type: String as any,
-            validator: (v: string) => values.indexOf(v as T) >= 0
-        });
-    },
-    anything: new BuilderClass<any>({}) as Builder<any>
-};
+export default rootBuilders;

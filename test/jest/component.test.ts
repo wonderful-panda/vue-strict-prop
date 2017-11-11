@@ -24,20 +24,26 @@ describe("vue-strict-prop / component", () => {
     describe("str.required", () => {
         const Test = Vue.extend({
             props: {
-                foo: p.str.required
+                foo: p(String).required
             },
             render(h): VNode {
                 return h("span", this.foo);
             }
         });
         it("pass value other than string", () => {
-            const wrapper = mount(Test, { propsData: { foo: 0 } });
+            const wrapper = mount(Test, {
+                propsData: {
+                    foo: 0
+                }
+            });
             expect(wrapper.html()).toBe("<span>0</span>");
             expect(warnings.shift()).toMatch(/expected string, got number/i);
             expect(warnings.shift()).toBeUndefined();
         });
         it("does not pass value", () => {
-            const wrapper = mount(Test, { propsData: {} });
+            const wrapper = mount(Test, {
+                propsData: {}
+            });
             expect(wrapper.html()).toBe("<span></span>");
             expect(warnings.shift()).toMatch(/missing required prop/i);
             expect(warnings.shift()).toBeUndefined();
@@ -47,14 +53,18 @@ describe("vue-strict-prop / component", () => {
     describe("str.optional", () => {
         const Test = Vue.extend({
             props: {
-                foo: p.str.optional
+                foo: p(String).optional
             },
             render(h): VNode {
                 return h("span", this.foo);
             }
         });
         it("pass value other than string", () => {
-            const wrapper = mount(Test, { propsData: { foo: 0 } });
+            const wrapper = mount(Test, {
+                propsData: {
+                    foo: 0
+                }
+            });
             expect(wrapper.html()).toBe("<span>0</span>");
             expect(warnings.shift()).toMatch(/expected string, got number/i);
             expect(warnings.shift()).toBeUndefined();
@@ -69,14 +79,18 @@ describe("vue-strict-prop / component", () => {
     describe("str.default", () => {
         const Test = Vue.extend({
             props: {
-                foo: p.str.default("default")
+                foo: p(String).default("default")
             },
             render(h): VNode {
                 return h("span", this.foo);
             }
         });
         it("pass value other than string", () => {
-            const wrapper = mount(Test, { propsData: { foo: 0 } });
+            const wrapper = mount(Test, {
+                propsData: {
+                    foo: 0
+                }
+            });
             expect(wrapper.html()).toBe("<span>0</span>");
             expect(warnings.shift()).toMatch(/expected string, got number/i);
             expect(warnings.shift()).toBeUndefined();
