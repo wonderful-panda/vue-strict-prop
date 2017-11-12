@@ -40,3 +40,5 @@ const MyComponent = Vue.extend({
     }
 });
 ```
+
+More examples can be found in [here](/test/jest/basic.test.ts).
