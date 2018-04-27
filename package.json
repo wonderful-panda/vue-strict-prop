@@ -31,6 +31,7 @@
   "homepage": "https://github.com/wonderful-panda/vue-strict-prop#readme",
   "devDependencies": {
     "@types/jest": "^21.1.5",
+    "hoek": "^4.2.1",
     "jest": "^21.2.1",
     "npm-run-all": "^4.1.2",
     "prettier": "1.8.1",
