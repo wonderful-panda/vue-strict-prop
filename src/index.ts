@@ -6,7 +6,7 @@ export type AnyFunc = (...args: any[]) => any;
 export type Validator<T> = (value: T) => boolean;
 
 export interface Finisher<T> {
-    readonly required: PropOptions<T>;
+    readonly required: PropOptions<T> & { required: true };
     readonly optional: PropOptions<T | undefined>;
     default(value: T | (() => T & object)): PropOptions<T>;
 }
@@ -50,7 +50,7 @@ class BuilderClass<T> implements ChainableBuilder<T> {
     get required() {
         return {
             ...this.opts,
-            required: true
+            required: true as true
         };
     }
     get optional() {
