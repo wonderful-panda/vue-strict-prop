@@ -1,6 +1,6 @@
 {
   "name": "vue-strict-prop",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "strict-typed prop builder for Vue component",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
