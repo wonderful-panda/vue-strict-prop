@@ -34,6 +34,7 @@ export interface NamedBuilders<BaseType> {
     ofObject<T extends object>(): ChainableBuilder<BaseType | T>;
     ofStringLiterals<T extends string>(...values: T[]): Finisher<T>;
     ofAny(): Builder<any>;
+    ofType<T>(): Builder<T>;
 }
 
 export type BuilderCollection<BaseType> = GeneralBuilder<BaseType> & NamedBuilders<BaseType>;
@@ -105,6 +106,9 @@ function createBuilderCollection<BaseType>(baseTypes: Array<Prop<BaseType>>): Bu
         },
         ofAny() {
             return new BuilderClass<any>({}) as Builder<any>;
+        },
+        ofType<T>() {
+            return new BuilderClass<T>({}) as Builder<T>;
         }
     };
     /* tslint:disable-next-line: prefer-object-spread */

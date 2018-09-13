@@ -1,4 +1,5 @@
 # vue-strict-prop
+
 [![Build Status](https://travis-ci.org/wonderful-panda/vue-strict-prop.svg?branch=master)](https://travis-ci.org/wonderful-panda/vue-strict-prop)
 
 strict-typed prop builder for Vue component
@@ -34,6 +35,11 @@ const MyComponent = Vue.extend({
         // equivarent to { type: Array, required: true }.
         // `this.buttons` is statically typed as `Array<string>`
         buttons: p.ofArray<string>().required
+
+        // equivarent to { required: true }.
+        // `this.ctx` is statically typed as `TContext`
+        ctx: p.ofType<TContext>().required
+
     },
     render(h): VNode {
         /* snip */

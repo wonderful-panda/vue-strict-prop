@@ -216,4 +216,17 @@ describe("vue-strict-props / basic test", () => {
             default: 1
         });
     });
+
+    it("ofType", () => {
+        expect(p.ofType<{ foo: string }>().required).toEqual({
+            required: true
+        });
+        expect(p.ofType<{ foo: string }>().optional).toEqual({
+            required: false
+        });
+        expect(p.ofType<{ foo: string }>().default(() => ({ foo: "foo" }))).toMatchObject({
+            required: false,
+            default: expect.any(Function)
+        });
+    });
 });
