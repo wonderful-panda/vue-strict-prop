@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "tsc -p tsconfig.json",
     "jest": "jest",
     "tslint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
     "tslint:fix": "tslint -c tslint.json src/**/*.ts test/**/*.ts --fix",
@@ -39,11 +39,10 @@
     "ts-loader": "^3.1.1",
     "tslint": "5.8.0",
     "tslint-config-prettier": "1.6.0",
-    "typescript": "^2.6.1",
+    "typescript": "^2.9.1",
     "vue": "^2.5.2",
     "vue-template-compiler": "^2.5.2",
-    "vue-test-utils": "^1.0.0-beta.4",
-    "webpack": "^3.8.1"
+    "vue-test-utils": "^1.0.0-beta.4"
   },
   "peerDependencies": {
     "vue": "^2.5.2"

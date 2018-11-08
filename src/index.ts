@@ -90,10 +90,10 @@ function createBuilderCollection<BaseType>(baseTypes: Array<Prop<BaseType>>): Bu
             return createBuilder(baseTypes, Function as any) as ChainableBuilder<BaseType | T>;
         },
         ofArray<T>() {
-            return createBuilder(baseTypes, Array);
+            return createBuilder(baseTypes, Array) as ChainableBuilder<BaseType | T[]>;
         },
         ofRoArray<T>() {
-            return createBuilder(baseTypes, Array);
+            return createBuilder(baseTypes, Array) as ChainableBuilder<BaseType | ReadonlyArray<T>>;
         },
         ofObject<T extends object>() {
             return createBuilder(baseTypes, Object);
