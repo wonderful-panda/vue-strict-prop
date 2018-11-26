@@ -8,7 +8,7 @@ export type Validator<T> = (value: T) => boolean;
 export interface Finisher<T> {
     readonly required: PropOptions<T> & { required: true };
     readonly optional: PropOptions<T | undefined>;
-    default(value: T | (() => T & object)): PropOptions<T>;
+    default(value: T extends object ? () => T : T): PropOptions<T>;
 }
 
 export interface Builder<T> extends Finisher<T> {
