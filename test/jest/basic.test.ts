@@ -162,8 +162,8 @@ describe("vue-strict-props / basic test", () => {
         });
 
         class Test {
-            foo: string;
-            bar: number;
+            foo!: string;
+            bar!: number;
         }
         expect(p(Test).optional).toEqual({
             type: Test,
