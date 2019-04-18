@@ -37,7 +37,7 @@ describe("vue-strict-prop / component", () => {
                 }
             });
             expect(wrapper.html()).toBe("<span>0</span>");
-            expect(warnings.shift()).toMatch(/expected string, got number/i);
+            expect(warnings.shift()).toMatch(/expected string .* got number/i);
             expect(warnings.shift()).toBeUndefined();
         });
         it("does not pass value", () => {
@@ -66,7 +66,7 @@ describe("vue-strict-prop / component", () => {
                 }
             });
             expect(wrapper.html()).toBe("<span>0</span>");
-            expect(warnings.shift()).toMatch(/expected string, got number/i);
+            expect(warnings.shift()).toMatch(/expected string .* got number/i);
             expect(warnings.shift()).toBeUndefined();
         });
         it("does not pass value", () => {
@@ -92,7 +92,7 @@ describe("vue-strict-prop / component", () => {
                 }
             });
             expect(wrapper.html()).toBe("<span>0</span>");
-            expect(warnings.shift()).toMatch(/expected string, got number/i);
+            expect(warnings.shift()).toMatch(/expected string .* got number/i);
             expect(warnings.shift()).toBeUndefined();
         });
         it("does not pass value", () => {
