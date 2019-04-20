@@ -29,6 +29,7 @@ export type GeneralBuilder<BaseType> = <T1, T2 = never, T3 = never, T4 = never, 
 
 export interface NamedBuilders<BaseType> {
     ofFunction<T extends AnyFunc>(): ChainableBuilder<BaseType | T>;
+    ofFunction<A, R>(): ChainableBuilder<BaseType | ((arg: A) => R)>;
     ofArray<T>(): ChainableBuilder<BaseType | T[]>;
     ofRoArray<T>(): ChainableBuilder<BaseType | ReadonlyArray<T>>;
     ofObject<T extends object>(): ChainableBuilder<BaseType | T>;
