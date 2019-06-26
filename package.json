@@ -9,7 +9,9 @@
     "jest": "jest",
     "prettier": "prettier \"{src,test/jest}/**/*.ts\" --list-different",
     "prettier:fix": "prettier \"{src,test/jest}/**/*.ts\" --write",
-    "test": "npm-run-all prettier jest"
+    "eslint": "eslint \"{src,test/jest}/**.*.ts\"",
+    "eslint:fix": "eslint \"{src,test/jest}/**.*.ts\" --fix",
+    "test": "npm-run-all prettier eslint jest"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,14 @@
   "homepage": "https://github.com/wonderful-panda/vue-strict-prop#readme",
   "devDependencies": {
     "@types/jest": "^24.0.11",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^6.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
     "hoek": "^6.1.3",
     "jest": "^24.7.1",
     "merge": "^1.2.1",

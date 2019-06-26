@@ -11,6 +11,8 @@
     "inlineSourceMap": true,
     "declaration": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "keyofStringsOnly": true

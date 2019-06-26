@@ -1,4 +1,4 @@
-import Vue, { PropOptions } from "vue";
+import { PropOptions } from "vue";
 import { Prop } from "vue/types/options";
 
 export type AnyFunc = (...args: any[]) => any;
@@ -113,7 +113,7 @@ function createBuilderCollection<BaseType>(
       >;
     },
     ofObject<T extends object>() {
-      return createBuilder(baseTypes, Object);
+      return createBuilder(baseTypes, Object) as ChainableBuilder<BaseType | T>;
     },
     ofStringLiterals<T extends string>(...values: T[]): Finisher<T> {
       return new BuilderClass<T>({
@@ -128,7 +128,6 @@ function createBuilderCollection<BaseType>(
       return new BuilderClass<T>({}) as Builder<T>;
     }
   };
-  /* tslint:disable-next-line: prefer-object-spread */
   return Object.assign(ret, namedBuilders);
 }
 

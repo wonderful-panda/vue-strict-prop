@@ -1,4 +1,3 @@
-import Vue, { VNode } from "vue";
 import p from "../..";
 
 describe("vue-strict-props / basic test", () => {
