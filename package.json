@@ -7,13 +7,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "jest": "jest",
-    "tslint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
-    "tslint:fix": "tslint -c tslint.json src/**/*.ts test/**/*.ts --fix",
     "prettier": "prettier \"{src,test/jest}/**/*.ts\" --list-different",
     "prettier:fix": "prettier \"{src,test/jest}/**/*.ts\" --write",
-    "lint": "npm-run-all tslint prettier",
-    "lint:fix": "npm-run-all tslint:fix prettier:fix",
-    "test": "npm-run-all lint jest"
+    "test": "npm-run-all prettier jest"
   },
   "repository": {
     "type": "git",
@@ -39,8 +35,6 @@
     "randomatic": "^3.1.1",
     "ts-jest": "^24.0.2",
     "ts-loader": "^5.3.3",
-    "tslint": "^5.16.0",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.3",
     "vue": "^2.5.2",
     "vue-template-compiler": "^2.5.2",
@@ -66,9 +60,5 @@
     "transform": {
       "^.+\\.ts$": "ts-jest"
     }
-  },
-  "prettier": {
-    "printWidth": 120,
-    "tabWidth": 4
   }
 }
